@@ -97,12 +97,15 @@ def get_paper_file(q:queue.Queue, page_num:int=0)->bool:
 
 
 if __name__ == '__main__':
-    items = get_paper_info('abc', 3)
+    key_word:str = input('搜索关键词: ')
+    pages:int = int(input('搜索页数: '))
+    down_thread:int = int(input('下载线程数: '))
+    items = get_paper_info(key_word, pages)
     q = queue.Queue()
     for item in items:
         q.put(item)
     threads = []
-    for i in range(5):
+    for i in range(down_thread):
         t = threading.Thread(target=get_paper_file, args=(q, i))
         threads.append(t)
         t.start()
